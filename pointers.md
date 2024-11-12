@@ -1,25 +1,28 @@
 ---
-@import-theme 'nothke'
 marp: true
-theme: nothke
+class: invert
+paginate: true
+
 ---
 
+# Don't Be Afraid of Pointers
 
-# Don't be afraid of pointers
+---
 
 ## Intro
-- I got many questions from people about pointers. Seems like
-- What is a pointer? A pointer is an adress
+- realized many people don't understand pointers
+- this talk is going to have A LOT of simplifications
 
 ***
 
-## What is memory
+## What is memory?
 - a strip of zeroes and ones
 ```
 000000000111110101010101111111111011...
 ```
 ***
 
+## What is memory?
 - memory is split by 8 bits into bytes
 
 ```
@@ -27,22 +30,41 @@ theme: nothke
 ```
 ***
 
+## What is memory?
 But, for simplicity we usually write it in hexadecimal (hex)
 
 ```
 00|7D|55|FF|B7|..
 ```
 
+***
+
+## What is memory?
 - How many values can 1 byte have?
 
+***
+
+## What is memory?
+- How many values can 1 byte have?
 ```
 1B = 8b  = 256
+```
+- more bytes?
+
+---
+
+- How many values can 1, 2, 4, 8 bytes have?
+```
 2B = 16b = 65,536
 4B = 32b = 4,294,967,296
 8B = 64b = 18,446,744,073,709,551,616
 ```
 
+***
+
 - ADD PIC OF HEX EDITOR
+
+---
 
 Every byte in the memory, has an address
 
@@ -51,47 +73,147 @@ Every byte in the memory, has an address
 0  1  2  3  4
 ```
 
-- a3 - vrednost - value
-- 3 - adresa - pointer
-- referenciranje - na kojoj adresi je FF?
-- dereferenciranje - koja je vrednost na adresi 3?
+---
 
-Svaka vrednost zivi na nekoj adresi u memoriji
+- a3 - value
+- 3 - adress - pointer
+- __referencing__ - on which address is FF?
+- __dereferencing__ - what is the value of 3?
+
+Every value lives somewhere!
+
+
+---
+
+# C
+- 1972; 52 years ago
+- manual memory management
+- clear what is on stack and what on heap
+
+---
 
 ## Copying
-- C kod
 ```c
-int a = 1;
-int c = a + b;
+#include "stdio.h"
+
+int main() {
+    int a = 1;
+    int b = a;
+
+    a = 3;
+
+    printf("a: %i, b: %i\n", a, b);
+}
 ```
 
+---
+
+## But where do these values "live"?
+
+---
+
+## But where do these values "live"?
+- in this case, on the stack
+
+
+## Scope
 ```c
-int a = 1;
-int b = a;
-b = 3;
-printf("a: %i, b: %i\n", a, b);
+char a = 3;
+char b = 4;
+
+{
+    char c = 5;
+}
+
+printf("%d", c); // error!
 ```
 
-Gde zive ove vrednosti?
+- we cannot get values outside of scope!
 
-Programski stack
+---
 
-stack se uvecava, i smanjuje kako definisemo vrednosti
+## in memory?
+ ![alt text](stack_bytes.png)
 
+---
 
-scope
+![](content/herb.png)
+
+---
+
+- int has 4 bytes in C
+```c
+int a = 3;
+int b = 4;
+int c = 5;
+
+printf("%d", c);
+```
+
+.
+![alt text](stack_ints.png)
+
+---
+
+What does this all have to do with pointers??
+
+---
+
+## Pointers
+- Pointers are values (objects) that store an address
+- `int*` pointer to int
+
+---
+## Referencing and dereferencing
 ```c
 int a = 3;
 int b = 4;
 
-{
-    int c = 4;
-}
+int* bPtr = &b;
+
+printf("%d\n", b);
+printf("%d\n", bPtr);
+printf("%d\n", *bPtr);
+
+*bPtr = 6;
+
+printf("%d\n", b);
 ```
 
-kakve ovo ima veze sa pointerima?
+---
 
-U C: int* pointer na int
+![alt text](pointer_to_stack.png)
+
+---
+
+- Pointers don't need to point to stack, but anywhere in program's memory
+- stack, static, heap
+
+---
+- stack is great, but it is limited
+- must have predictable size
+- must have 
+- in C, we can allocated on the heap
+
+---
+![alt text](heap_ptr.png)
+---
+
+use after free
+
+---
+
+## Strings
+- C pointers don't store the size, only the start
+- strings end with a null
+- safety issue, we can insert a 0, or we can overwrite a 0 at the end and continue
+
+---
+
+- strings in C
+![](pointer-to-string.png)
+
+---
 
 C stringovi
 
@@ -101,27 +223,190 @@ dynamic allocation - heap
 
 malloc - syscall, OS gives us permission to allocate memory
 
-C++
+---
 
-Uvodi reference type int&
+
+
+# C
+- Heap
+
+
+---
+
+
+
+---
+
+# Stack
+- grows
+- fast
+- must have predictable size
+
+---
+
+- no one 
+
+---
+
+
+
+# C
+## arrays
+- values are contiguous in memory
+- must have known size
+- do not store the size
+
+---
+
+```C
+#include <stdio.h>
+#include <stdlib.h>
+
+int main() {
+    char array[4] = {1, 2, 3, 4};
+
+    array[0] = 13;
+
+    printf("%d", array[0]);
+
+    return 0;
+}
+```
+
+---
+
+# unions
+- All members at the same location in memory
+
+---
+
+# C++
+- 1985; 39 years ago
+- classes, constructors, destructors, RAII
+- reference types
+
+---
+
+# C++
+
+Introduces reference type - int&
 - can't be null
 - can't be reassigned to
 - reference with int& aRef = a;
 - dereference with . instead of ->
-- adds a few complications - unclear
-- is not actually a pointer, but an alias
 
-Uvodi RAII
+---
 
-constructors and destructors
+# C++
+
+Introduces reference type - int&
+- can't be null
+- can't be reassigned to
+- reference with int& aRef = a;
+- dereference with . instead of ->
+- is not actually an object, but an alias
+
+---
+
+# C++
+## RAII
+- means Resource Acquisition Is Initialization
+- classes have constructors and destructors
+- memory can be managed by a class and hidden from the user
+
+---
+
+# C++
+## new
+
+---
+
+# Garbage Collected languages
+- Java, C#, Python, Go, javascript..
+- user doesn't need to think about memory
+- memory usage is tracked at runtime and disposed
+    - GC trades runtime cost with programmer flexibility
+
+---
+
+# C#
+- value and reference types
+- value types:
+    - simple types and structs
+    - on stack (or in-place)
+    - always copied
+    - you cannot take references out of scopes
+
+---
+
+```C#
+struct Vector3 {
+    public float x;
+    public float y;
+    public float z;
+}
+```
+
+---
+
+# C#
+- reference types
+    - class
+
+---
+
+---
 
 rust
+- memory tracked at compile time
+- 
 
-Garbage collected languages Java/C#
+---
+# C:
+![alt text](programer_cop.png)
 
-value type i reference type
-- value type se kopira, reference type se referencuje pointer (kopiramo samo pointer)
+---
 
-weakly typed languages - python, javascript
+# Rust:
+![alt text](compiler_cop.png)
 
-funkcionalni jezici - we don't talk about them
+---
+
+# GC:
+![alt text](exe_cop.png) 
+
+---
+
+## fat / wide pointers
+- holds 2 values:
+    - a pointer to the start
+    - and a size
+- C++ - `std::span<T>`, `std::string_view<T>`
+- zig - []T - slice
+- rust - slices
+
+---
+
+## what about indexing?
+- Can be used instead of pointers for arrays
+
+---
+
+# Functional languages?
+
+---
+
+# Functional languages?
+- we don't talk about them
+
+---
+
+# Functional languages?
+- we don't talk about them
+- Why? Because they have abstracted away memory from the user
+
+---
+
+That's it, thanks!
+
+---
