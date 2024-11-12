@@ -1,0 +1,26 @@
+{
+    "editor.tokenColorCustomizations": {
+        "[Default Dark+]": {
+            "variables": "#e6e6e6",
+            "functions": "#ffe58f",
+            "comments": "#009b81",
+            "numbers": "#ffd900",
+            "keywords": "#e985cb",
+            "types": "#a7ebe6",
+            "strings": "#eda774",
+            "textMateRules": [
+                {
+                    "scope": "keyword",
+                    "settings": {
+                        "foreground": "#69bed6"
+                    }
+                }
+            ]
+        },
+        "[Material Neutral]": {
+            "comments": "#80a37d"
+        },
+        "comments": "",
+        "textMateRules": []
+    }
+}
