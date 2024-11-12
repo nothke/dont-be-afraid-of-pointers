@@ -9,10 +9,15 @@ typedef union {
 
 int main() {
     Packet packet;
-    packet.i = 3;
+    packet.i = 666;
 
-    printf("%d", packet.i);
-    printf("%f", packet.f);
+    printf("\n%d\n", packet.i);
+    printf("%f\n", packet.f);
+
+
+    printf("%i\n", &packet.i);
+    printf("%i\n", &packet.f);
+
 
     return 0;
 }

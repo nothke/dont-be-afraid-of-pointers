@@ -1,12 +1,16 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-int main() {
-    char array[4] = {1, 2, 3, 4};
+int main(){
 
-    array[0] = 13;
+   int a[]= {10, 20, 30, 40, 50, 60, 70, 80, 90, 100};
+   int len = sizeof(a)/sizeof(int);
+   int *x = a;
+   int i = 0;
 
-    printf("%d", array);
+   for(i = 0; i < len; i++){
+      printf("Address of subscript %d = %d Value = %d\n", i, x, *x);
+      x++;
+   }
 
-    return 0;
+   return 0;
 }

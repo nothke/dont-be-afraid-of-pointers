@@ -40,16 +40,17 @@ But, for simplicity we usually write it in hexadecimal (hex)
 ***
 
 ## What is memory?
-- How many values can 1 byte have?
+- Q: How many values can 1 byte have?
+  - 00000000 - 11111111
 
 ***
 
 ## What is memory?
-- How many values can 1 byte have?
+- Q: How many values can 1 byte have?
 ```
 1B = 8b  = 256
 ```
-- more bytes?
+- Q: And more bytes?
 
 ---
 
@@ -60,9 +61,8 @@ But, for simplicity we usually write it in hexadecimal (hex)
 8B = 64b = 18,446,744,073,709,551,616
 ```
 
-***
-
-- ADD PIC OF HEX EDITOR
+---
+![alt text](HexEdit_2024-11-11_16-55-00.png)
 
 ---
 
@@ -171,14 +171,18 @@ int b = 4;
 
 int* bPtr = &b;
 
-printf("%d\n", b);
-printf("%d\n", bPtr);
-printf("%d\n", *bPtr);
-
 *bPtr = 6;
-
-printf("%d\n", b);
 ```
+
+---
+
+- Q: What is the size of pointers?
+
+---
+
+- Q: What is the size of pointers?
+  - 32bit (4 bytes) on 32 bit systems
+  - 64bit (8 bytes) on 64 bit systems
 
 ---
 
@@ -190,66 +194,84 @@ printf("%d\n", b);
 - stack, static, heap
 
 ---
-- stack is great, but it is limited
-- must have predictable size
-- must have 
-- in C, we can allocated on the heap
+## Stack
+- pros:
+  - fast allocations
+  - fast access, related values are close in memory
+- cons:
+  - total size is limited
+  - must have predictable size (at compile time)
+---
+
+![alt text](firefox_2024-11-11_16-32-01.png)
+
+---
+
+# Heap
+- dynamic memory
+- pros:
+  - You can have as much memory as you want* at runtime
+- cons:
+  - allocations are slow
+  - scattered
+
+---
+# Heap in C
+- allocating on the heap can be done with malloc()
+
+```C
+void* myBlockOfMemory = malloc(sizeof(int));
+
+int* intPtr = (int*)myBlockOfMemory;
+
+*intPtr = 34;
+```
 
 ---
 ![alt text](heap_ptr.png)
----
 
-use after free
+---
+- malloc() is a syscall
+- Dynamically allocated mamory must be freed!
+- Dangers: use after free
+- Dereferencing a null pointer
 
 ---
 
 ## Strings
 - C pointers don't store the size, only the start
-- strings end with a null
-- safety issue, we can insert a 0, or we can overwrite a 0 at the end and continue
+- Strings in C are just char* - meaning they are a simple pointer
+- Strings known at compile time are stored in global memory
+- strings end with a `\0` - null terminated
+- _Danger:_ we can insert a 0, or we can overwrite a 0 at the end and continue
 
 ---
 
 - strings in C
 ![](pointer-to-string.png)
+- show sample
 
 ---
-
-C stringovi
-
-What if we need more memory?
-
-dynamic allocation - heap
-
-malloc - syscall, OS gives us permission to allocate memory
-
----
+- Example: Linked lists
+![alt text](singly-linkedlist-1.png)
 
 
+```C++
+typedef struct Node {
+    int val;
+    struct Node* next;
+} node_t;
 
-# C
-- Heap
-
+```
 
 ---
-
-
-
----
-
-# Stack
-- grows
-- fast
-- must have predictable size
+Pointers to pointers
+- `int**` - pointer to a pointer to int
 
 ---
-
-- no one 
+![alt text](image.png)
 
 ---
-
-
-
 # C
 ## arrays
 - values are contiguous in memory
@@ -275,6 +297,15 @@ int main() {
 
 ---
 
+- In C, arrays are both values and pointers
+
+---
+
+## Pointer arithmetic
+
+
+---
+
 # unions
 - All members at the same location in memory
 
@@ -282,7 +313,7 @@ int main() {
 
 # C++
 - 1985; 39 years ago
-- classes, constructors, destructors, RAII
+- constructors, destructors that enable RAII
 - reference types
 
 ---
@@ -313,11 +344,6 @@ Introduces reference type - int&
 - means Resource Acquisition Is Initialization
 - classes have constructors and destructors
 - memory can be managed by a class and hidden from the user
-
----
-
-# C++
-## new
 
 ---
 
@@ -352,14 +378,30 @@ struct Vector3 {
 # C#
 - reference types
     - class
+    - memory tracked at runtime
+    - usually implemented as a reference counter
+    - must be created with new Person()
 
 ---
+```C#
+class Person {
+  String name;
+  int age;
+  int jmbg;
+}
+
+Person person = new Person();
+person.name = "Nothke";
+```
+---
+- python, everything is a reference type..?
+- go - values get allocated on the heap when grabbed as a reference
+- javascript.. Depends on the browser
 
 ---
 
 rust
 - memory tracked at compile time
-- 
 
 ---
 # C:
@@ -408,5 +450,4 @@ rust
 ---
 
 That's it, thanks!
-
----
+- @nothke everywhere
