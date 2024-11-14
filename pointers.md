@@ -62,7 +62,12 @@ But, for simplicity we usually write it in hexadecimal (hex)
 ```
 
 ---
-![alt text](content/HexEdit_2024-11-11_16-55-00.png)
+<style scoped>
+{
+  text-align: center;
+}
+</style>
+![alt text](content/hexedit.png)
 
 ---
 
@@ -203,7 +208,7 @@ int* bPtr = &b;
   - must have predictable size (at compile time)
 ---
 
-![alt text](content/firefox_2024-11-11_16-32-01.png)
+![alt text](content/stack_sizes.png)
 
 ---
 
@@ -242,6 +247,7 @@ int* intPtr = (int*)myBlockOfMemory;
 - C pointers don't store the size, only the start
 - Strings in C are just char* - meaning they are a simple pointer
 - Strings known at compile time are stored in global memory
+  - [example: string literal](examples/c/string_literal.c)
 - strings end with a `\0` - null terminated
 - _Danger:_ we can insert a 0, or we can overwrite a 0 at the end and continue
 
@@ -249,11 +255,12 @@ int* intPtr = (int*)myBlockOfMemory;
 
 - strings in C
 ![](content/pointer-to-string.png)
-- show sample
+- [example: overriding null terminator](examples/c/string_literal.c)
+
 
 ---
 - Example: Linked lists
-![alt text](content/singly-linkedlist-1.png)
+![alt text](content/linked_list.png)
 
 
 ```C++
@@ -269,7 +276,7 @@ Pointers to pointers
 - `int**` - pointer to a pointer to int
 
 ---
-![alt text](content/image.png)
+![alt text](content/five_star_programmer.png)
 
 ---
 # C
@@ -320,22 +327,13 @@ int main() {
 
 # C++
 
-Introduces reference type - int&
+Introduces reference type - `int&`
 - can't be null
 - can't be reassigned to
-- reference with int& aRef = a;
-- dereference with . instead of ->
-
----
-
-# C++
-
-Introduces reference type - int&
-- can't be null
-- can't be reassigned to
-- reference with int& aRef = a;
-- dereference with . instead of ->
-- is not actually an object, but an alias
+- reference with `int& aRef = a;`
+- dereference with `.` instead of `->`
+- is not actually an object, but an alias!
+- [example](examples\cpp\pass_by_ref.cpp)
 
 ---
 
@@ -344,18 +342,24 @@ Introduces reference type - int&
 - means Resource Acquisition Is Initialization
 - classes have constructors and destructors
 - memory can be managed by a class and hidden from the user
+- [example: RAII, ctors and dtors](examples\cpp\ctordtor.cpp)
+- This allows for a lot more high level abstraction than C
+  - [example: std::vector](examples/cpp/vector.cpp)
 
 ---
+
+
 
 # Garbage Collected languages
 - Java, C#, Python, Go, javascript..
 - user doesn't need to think about memory
-- memory usage is tracked at runtime and disposed
-    - GC trades runtime cost with programmer flexibility
+- memory usage is tracked at runtime and freed automatically when not used
+- GC trades runtime cost with programmer flexibility
 
 ---
 
 # C#
+- (as an example of a GC language I know)
 - value and reference types
 - value types:
     - simple types and structs
@@ -365,22 +369,12 @@ Introduces reference type - int&
 
 ---
 
-```C#
-struct Vector3 {
-    public float x;
-    public float y;
-    public float z;
-}
-```
-
----
-
 # C#
 - reference types
     - class
     - memory tracked at runtime
     - usually implemented as a reference counter
-    - must be created with new Person()
+    - must be created with `new`
 
 ---
 ```C#
@@ -396,12 +390,13 @@ person.name = "Nothke";
 ---
 - python, everything is a reference type..?
 - go - values get allocated on the heap when grabbed as a reference
-- javascript.. Depends on the browser
+- javascript - Depends on the browser, but ECMAscript defines some standards
 
 ---
 
-rust
+# Rust
 - memory tracked at compile time
+- much more errors can be caught at compile time than in other languages
 
 ---
 <style scoped>
@@ -436,7 +431,7 @@ rust
 ---
 
 ## fat / wide pointers
-- holds 2 values:
+- hold 2 values:
     - a pointer to the start
     - and a size
 - C++ - `std::span<T>`, `std::string_view<T>`
@@ -454,12 +449,7 @@ rust
 
 ---
 
-# Functional languages?
-- we don't talk about them
-
----
-
-# Functional languages?
+# ~~Functional languages?~~
 - we don't talk about them
 - Why? Because they have abstracted away memory from the user
 
