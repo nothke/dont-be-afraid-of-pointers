@@ -369,6 +369,7 @@ In C, arrays behave both like values and pointers
 - 1985; 39 years ago
 - constructors, destructors that enable RAII
 - reference types
+- smart pointers
 
 ---
 
@@ -394,8 +395,14 @@ Introduces reference type - `int&`
   - [example: std::vector](examples/cpp/vector.cpp)
 
 ---
+# C++
+## Smart pointers
+- Allow automatic freeing of resources, so `free()` or `delete` doesn't need to be used
+  - `std::unique_ptr` most commonly used
+  - `std::shared_ptr` can be used when resources need to be shared between multiple objects, works by reference counting
+  - `std::weak_ptr` can be used to break cyclical references
 
-
+---
 
 # Garbage Collected languages
 - Java, C#, Python, Go, javascript..
