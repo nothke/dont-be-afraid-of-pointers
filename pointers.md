@@ -172,12 +172,12 @@ What does this all have to do with pointers??
 ## Referencing and dereferencing
 ```c
 int a = 3;
-int b = 4;
 
-int* bPtr = &b;
+int* aPtr = &a; // Take the address of a
 
-*bPtr = 6;
+*bPtr = 6; // Set a new value to a through a pointer
 ```
+- [example: ref/deref](examples\c\deref.c)
 
 ---
 
@@ -190,6 +190,13 @@ int* bPtr = &b;
   - 64bit (8 bytes) on 64 bit systems
 
 ---
+
+```c
+int a = 3;
+int b = 4;
+
+int* bPtr = &b;
+```
 
 ![alt text](content/pointer_to_stack.png)
 
@@ -218,31 +225,53 @@ int* bPtr = &b;
   - You can have as much memory as you want* at runtime
 - cons:
   - allocations are slow
-  - scattered
+  - scattered in memory
 
 ---
 # Heap in C
 - allocating on the heap can be done with malloc()
 
 ```C
-void* myBlockOfMemory = malloc(sizeof(int));
+{
+  void* myBlockOfMemory = malloc(sizeof(int));
 
-int* intPtr = (int*)myBlockOfMemory;
+  int* intPtr = (int*)myBlockOfMemory;
 
-*intPtr = 34;
+  *intPtr = 34;
+}
+```
+- Q: what did I forget here?
+---
+# Heap in C
+- every malloc() must also be freed
+```C
+{
+  void* myBlockOfMemory = malloc(sizeof(int));
+
+  int* intPtr = (int*)myBlockOfMemory;
+
+  *intPtr = 34;
+
+  free(intPtr);
+}
 ```
 
 ---
 ![alt text](content/heap_ptr.png)
 
 ---
+# C
+## Heap in C
 - malloc() is a syscall
 - Dynamically allocated mamory must be freed!
-- Dangers: use after free
-- Dereferencing a null pointer
+- Dangers: 
+  - use after free
+  - dereferencing a null pointer
+  - double free
 
 ---
 
+# C
 ## Strings
 - C pointers don't store the size, only the start
 - Strings in C are just char* - meaning they are a simple pointer
@@ -253,7 +282,8 @@ int* intPtr = (int*)myBlockOfMemory;
 
 ---
 
-- strings in C
+# C
+## Strings
 ![](content/pointer-to-string.png)
 - [example: overriding null terminator](examples/c/string_literal.c)
 
@@ -272,15 +302,16 @@ typedef struct Node {
 ```
 
 ---
+# C
 Pointers to pointers
-- `int**` - pointer to a pointer to int
+- `int**` - pointer to a pointer to an int
 
 ---
 ![alt text](content/five_star_programmer.png)
 
 ---
 # C
-## arrays
+## Arrays
 - values are contiguous in memory
 - must have known size
 - do not store the size
@@ -301,20 +332,36 @@ int main() {
     return 0;
 }
 ```
+- [example](examples/c/array.c)
 
 ---
 
-- In C, arrays are both values and pointers
+# C
+## Arrays
+In C, arrays behave both like values and pointers
+- sizeof(array) is the total size of array
+- will get disposed at the end of the scope like any value
+
 
 ---
 
+# C
 ## Pointer arithmetic
-
+- incrementing and decrementing depends on the size of pointer type
+- `char* charPtr; charPtr += 3;` increment by 3 bytes
+- `int* intPtr; intPtr += 3;` increment by 3 * 4 bytes
+  - ^ which is equivalent to `intPtr[3]` !
+- Quirk: `intPtr[5]` is the same as `5[intPtr]`
+  - that's because `a[n]` is nothing else than a sugar syntax to `*(a + n)`
+- danger: decrementing pointers below zero will overflow
 
 ---
 
+# C
 # unions
 - All members at the same location in memory
+- [example](examples/c/union.c)
+- quirk: allows for "type punning" - but don't do it!
 
 ---
 
