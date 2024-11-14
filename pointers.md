@@ -62,7 +62,7 @@ But, for simplicity we usually write it in hexadecimal (hex)
 ```
 
 ---
-![alt text](HexEdit_2024-11-11_16-55-00.png)
+![alt text](content/HexEdit_2024-11-11_16-55-00.png)
 
 ---
 
@@ -133,7 +133,7 @@ printf("%d", c); // error!
 ---
 
 ## in memory?
- ![alt text](stack_bytes.png)
+ ![alt text](content/stack_bytes.png)
 
 ---
 
@@ -151,7 +151,7 @@ printf("%d", c);
 ```
 
 .
-![alt text](stack_ints.png)
+![alt text](content/stack_ints.png)
 
 ---
 
@@ -186,7 +186,7 @@ int* bPtr = &b;
 
 ---
 
-![alt text](pointer_to_stack.png)
+![alt text](content/pointer_to_stack.png)
 
 ---
 
@@ -203,7 +203,7 @@ int* bPtr = &b;
   - must have predictable size (at compile time)
 ---
 
-![alt text](firefox_2024-11-11_16-32-01.png)
+![alt text](content/firefox_2024-11-11_16-32-01.png)
 
 ---
 
@@ -228,7 +228,7 @@ int* intPtr = (int*)myBlockOfMemory;
 ```
 
 ---
-![alt text](heap_ptr.png)
+![alt text](content/heap_ptr.png)
 
 ---
 - malloc() is a syscall
@@ -248,12 +248,12 @@ int* intPtr = (int*)myBlockOfMemory;
 ---
 
 - strings in C
-![](pointer-to-string.png)
+![](content/pointer-to-string.png)
 - show sample
 
 ---
 - Example: Linked lists
-![alt text](singly-linkedlist-1.png)
+![alt text](content/singly-linkedlist-1.png)
 
 
 ```C++
@@ -269,7 +269,7 @@ Pointers to pointers
 - `int**` - pointer to a pointer to int
 
 ---
-![alt text](image.png)
+![alt text](content/image.png)
 
 ---
 # C
@@ -404,18 +404,34 @@ rust
 - memory tracked at compile time
 
 ---
-# C:
-![alt text](programer_cop.png)
+<style scoped>
+{
+  text-align: center;
+}
+</style>
+
+# C
+![w:800px](content/programer_cop.png)
 
 ---
+<style scoped>
+{
+  text-align: center;
+}
+</style>
 
-# Rust:
-![alt text](compiler_cop.png)
+# Rust
+![w:800px](content/compiler_cop.png)
 
 ---
+<style scoped>
+{
+  text-align: center;
+}
+</style>
 
-# GC:
-![alt text](exe_cop.png) 
+# GC
+![w:800px](content/exe_cop.png) 
 
 ---
 
@@ -451,3 +467,4 @@ rust
 
 That's it, thanks!
 - @nothke everywhere
+- nothke@dmz.rs
