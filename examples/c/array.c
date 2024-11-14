@@ -7,6 +7,10 @@ int main(){
    int *x = a;
    int i = 0;
 
+   *(2 + a) = 666;
+   //a[2] = 661;
+   2[a] = 662;
+
    for(i = 0; i < len; i++){
       printf("Address of subscript %d = %d Value = %d\n", i, x, *x);
       x++;

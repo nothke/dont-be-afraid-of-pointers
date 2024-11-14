@@ -23,4 +23,8 @@ public:
 int main()
 {
     MyClass myClass;
+
+    {
+        MyClass myClass2;
+    }
 }

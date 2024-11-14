@@ -8,6 +8,9 @@ int main() {
 
     printf("%d\n", *intPtr);
 
+    int* nul = NULL;
+    printf("%d\n", *nul);
+
     *intPtr = 666;
 
     printf("%d\n", *intPtr);
@@ -16,7 +19,7 @@ int main() {
 
     printf("%d\n", *intPtr);
 
-    printf("%d\n", intPtr[456]);
+    printf("%d\n", intPtr[4562]);
 
     return 0;
 }
